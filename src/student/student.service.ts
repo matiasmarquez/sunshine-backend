@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -23,16 +23,32 @@ export class StudentService {
 	}
 
 	async read(id: string) {
-		return await this.studentRepository.findOne({ id });
+		const student = await this.studentRepository.findOne({ id });
+		if (!student) {
+			this.throwNotFoundException();
+		}
+		return student;
 	}
 
 	async update(id: string, data: Partial<StudentDTO>) {
+		const student = await this.studentRepository.findOne({ id });
+		if (!student) {
+			this.throwNotFoundException();
+		}
 		await this.studentRepository.update({ id }, data);
 		return await this.studentRepository.findOne({ id });
 	}
 
 	async destroy(id: string) {
+		const student = await this.studentRepository.findOne({ id });
+		if (!student) {
+			this.throwNotFoundException();
+		}
 		await this.studentRepository.delete({ id });
-		return { id };
+		return student;
+	}
+
+	throwNotFoundException() {
+		throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
 	}
 }
