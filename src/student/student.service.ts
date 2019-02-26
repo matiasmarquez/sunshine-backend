@@ -13,17 +13,17 @@ export class StudentService {
 	) {}
 
 	async showAll() {
-		return await this.studentRepository.find();
+		return await this.repository.find();
 	}
 
 	async create(data: StudentDTO) {
-		const student = await this.studentRepository.create(data);
-		await this.studentRepository.save(student);
+		const student = await this.repository.create(data);
+		await this.repository.save(student);
 		return student;
 	}
 
 	async read(id: string) {
-		const student = await this.studentRepository.findOne({ id });
+		const student = await this.repository.findOne({ id });
 		if (!student) {
 			this.throwNotFoundException();
 		}
@@ -31,24 +31,28 @@ export class StudentService {
 	}
 
 	async update(id: string, data: Partial<StudentDTO>) {
-		const student = await this.studentRepository.findOne({ id });
+		const student = await this.repository.findOne({ id });
 		if (!student) {
 			this.throwNotFoundException();
 		}
-		await this.studentRepository.update({ id }, data);
-		return await this.studentRepository.findOne({ id });
+		await this.repository.update({ id }, data);
+		return await this.repository.findOne({ id });
 	}
 
 	async destroy(id: string) {
-		const student = await this.studentRepository.findOne({ id });
+		const student = await this.repository.findOne({ id });
 		if (!student) {
 			this.throwNotFoundException();
 		}
-		await this.studentRepository.delete({ id });
+		await this.repository.delete({ id });
 		return student;
 	}
 
 	throwNotFoundException() {
 		throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
+	}
+
+	private get repository(): Repository<Student> {
+		return this.studentRepository;
 	}
 }
