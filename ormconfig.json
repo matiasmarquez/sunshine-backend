@@ -7,5 +7,5 @@
 	"database": "nestin",
 	"entities": ["src/**/**.entity{.ts,.js}"],
 	"synchronize": true,
-	"logging": true
+	"logging": false
 }
