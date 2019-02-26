@@ -15,9 +15,6 @@ export class User {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@CreateDateColumn()
-	created: Date;
-
 	@Column({
 		type: 'varchar',
 		unique: true,
@@ -26,6 +23,9 @@ export class User {
 
 	@Column('varchar')
 	password: string;
+
+	@CreateDateColumn()
+	created: Date;
 
 	@BeforeInsert()
 	async hashPassword() {
