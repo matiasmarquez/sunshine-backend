@@ -11,25 +11,22 @@ export class UserController {
 
 	@Get('api/user')
 	showAllUsers() {
-		const service = this.getUserService();
-		return service.showAll();
+		return this.service.showAll();
 	}
 
 	@Post('login')
 	@UsePipes(new ValidationPipe())
 	login(@Body() data: UserDTO) {
-		const service = this.getUserService();
-		return service.login(data);
+		return this.service.login(data);
 	}
 
 	@Post('register')
 	@UsePipes(new ValidationPipe())
 	register(@Body() data: UserDTO) {
-		const service = this.getUserService();
-		return service.register(data);
+		return this.service.register(data);
 	}
 
-	getUserService(): UserService {
+	private get service(): UserService {
 		return this.userService;
 	}
 }
