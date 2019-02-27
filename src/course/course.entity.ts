@@ -4,9 +4,14 @@ import {
 	Column,
 	CreateDateColumn,
 	ManyToOne,
+	ManyToMany,
+	JoinTable,
+	OneToMany,
 } from 'typeorm';
 
 import { CourseCategory } from './category.entity';
+import { Installment } from './installment.entity';
+import { Person } from 'src/staff/person.entity';
 
 @Entity('courses')
 export class Course {
@@ -22,6 +27,23 @@ export class Course {
 	@ManyToOne(type => CourseCategory, category => category.courses)
 	category: CourseCategory;
 
+	@OneToMany(type => Installment, installment => installment.course)
+	installments: Installment[];
+
+	@ManyToMany(type => Person, staff => staff.courses)
+	@JoinTable({
+		name: 'courses_staff',
+		joinColumn: {
+			name: 'courseId',
+			referencedColumnName: 'id',
+		},
+		inverseJoinColumn: {
+			name: 'personId',
+			referencedColumnName: 'id',
+		},
+	})
+	staff: Person[];
+
 	@Column('text')
 	briefDescription: string;
 
@@ -34,7 +56,11 @@ export class Course {
 	@Column('varchar')
 	schedule: string;
 
-	@Column('float')
+	@Column({
+		type: 'float',
+		precision: 14,
+		scale: 2,
+	})
 	price: number;
 
 	@CreateDateColumn()
