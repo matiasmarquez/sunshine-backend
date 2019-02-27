@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 import { CourseCategory } from './category.entity';
-import { Installment } from './installment.entity';
+import { CourseInstallment } from './installment.entity';
 import { Person } from 'src/staff/person.entity';
 
 @Entity('courses')
@@ -27,8 +27,8 @@ export class Course {
 	@ManyToOne(type => CourseCategory, category => category.courses)
 	category: CourseCategory;
 
-	@OneToMany(type => Installment, installment => installment.course)
-	installments: Installment[];
+	@OneToMany(type => CourseInstallment, installment => installment.course)
+	installments: CourseInstallment[];
 
 	@ManyToMany(type => Person, staff => staff.courses)
 	@JoinTable({
