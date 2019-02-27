@@ -9,9 +9,16 @@ import { AppService } from './app.service';
 import { StudentModule } from './student/student.module';
 import { UserModule } from './user/user.module';
 import { CourseModule } from './course/course.module';
+import { StaffModule } from './staff/staff.module';
 
 @Module({
-	imports: [TypeOrmModule.forRoot(), StudentModule, UserModule, CourseModule],
+	imports: [
+		TypeOrmModule.forRoot(),
+		StudentModule,
+		UserModule,
+		CourseModule,
+		StaffModule,
+	],
 	controllers: [AppController],
 	providers: [
 		AppService,
