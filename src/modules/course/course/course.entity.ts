@@ -9,9 +9,9 @@ import {
 	OneToMany,
 } from 'typeorm';
 
-import { CourseCategory } from './category.entity';
-import { CourseInstallment } from './installment.entity';
-import { Person } from 'src/staff/person.entity';
+import { CourseCategory } from '../category/category.entity';
+import { CourseInstallment } from '../installment/installment.entity';
+import { Person } from 'modules/staff/person.entity';
 
 @Entity('courses')
 export class Course {
@@ -24,10 +24,15 @@ export class Course {
 	})
 	name: string;
 
-	@ManyToOne(type => CourseCategory, category => category.courses)
+	@ManyToOne(type => CourseCategory, category => category.courses, {
+		eager: true,
+	})
 	category: CourseCategory;
 
-	@OneToMany(type => CourseInstallment, installment => installment.course)
+	@OneToMany(type => CourseInstallment, installment => installment.course, {
+		eager: true,
+		cascade: true,
+	})
 	installments: CourseInstallment[];
 
 	@ManyToMany(type => Person, staff => staff.courses)
@@ -44,10 +49,14 @@ export class Course {
 	})
 	staff: Person[];
 
-	@Column('text')
+	@Column('text', {
+		nullable: true,
+	})
 	briefDescription: string;
 
-	@Column('text')
+	@Column('text', {
+		nullable: true,
+	})
 	description: string;
 
 	@Column('varchar')

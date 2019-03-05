@@ -1,0 +1,11 @@
+type CourseInstallment {
+	id: ID!
+	number: Int!
+	price: Float!
+	course: Course!
+}
+
+input CourseInstallmentCreateInput {
+	number: Int!
+	price: Float!
+}

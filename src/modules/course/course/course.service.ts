@@ -1,0 +1,66 @@
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { Course } from './course.entity';
+import { CourseCreateDTO } from './dto/course.create.dto';
+import { CourseCategoryService } from '../category/category.service';
+import { CourseUpdateInput } from 'graphql.schema';
+import { CrudOperations } from 'common/services/crud.service';
+import { InstallmentService } from '../installment/installment.service';
+
+@Injectable()
+export class CourseService extends CrudOperations {
+	constructor(
+		@InjectRepository(Course)
+		protected readonly courseRepository: Repository<Course>,
+		@Inject(CourseCategoryService)
+		protected readonly categoryService: CourseCategoryService,
+		@Inject(InstallmentService)
+		protected readonly installmentService: InstallmentService,
+	) {
+		super(courseRepository);
+	}
+
+	async findAll(): Promise<Course[]> {
+		return super.findAll();
+	}
+
+	async findOneById(id: string): Promise<Course> {
+		return super.findOneById(id);
+	}
+
+	async findByCategory(id: string): Promise<Course[]> {
+		return super.findAllBy({ where: { category: { id } } });
+	}
+
+	async create(data: CourseCreateDTO): Promise<Course> {
+		const { categoryId, installments: installmentsArray } = data;
+		let installments = [];
+		if (installmentsArray && installmentsArray.length > 0) {
+			installments = await this.installmentService.createFromArray(
+				installmentsArray,
+			);
+		}
+		const category = await this.categoryService.findOneById(categoryId);
+		return super.create({
+			...data,
+			category,
+			installments,
+		});
+	}
+
+	async update(id: string, data: CourseUpdateInput): Promise<Course> {
+		let dataOpc = {};
+		const { categoryId } = data;
+		if (categoryId) {
+			const category = await this.categoryService.findOneById(categoryId);
+			dataOpc = { category };
+		}
+		return super.update(id, { ...data, ...dataOpc });
+	}
+
+	async delete(id: string): Promise<Course> {
+		return super.delete(id);
+	}
+}

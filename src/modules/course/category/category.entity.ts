@@ -6,15 +6,7 @@ import {
 	OneToMany,
 } from 'typeorm';
 
-import { Course } from './course.entity';
-
-export enum CourseCategoryColor {
-	ORANGE = '#E67401',
-	GREEN = '#009C53',
-	RED = '#DD3624',
-	BLUE = '#0061A8',
-	PURPLE = '#7C2282',
-}
+import { Course } from '../course/course.entity';
 
 @Entity('courses_categories')
 export class CourseCategory {
@@ -27,15 +19,18 @@ export class CourseCategory {
 	@Column('varchar')
 	name: string;
 
-	@Column('text')
+	@Column('text', {
+		nullable: true,
+	})
 	description: string;
 
-	@Column({
-		type: 'enum',
-		enum: CourseCategoryColor,
-	})
-	color: CourseCategoryColor;
+	@Column('varchar')
+	color: string;
 
 	@CreateDateColumn()
 	created: Date;
+
+	public static get colors() {
+		return ['#E67401', '#009C53', '#DD3624', '#0061A8', '#7C2282'];
+	}
 }
