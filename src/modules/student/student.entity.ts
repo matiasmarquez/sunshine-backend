@@ -3,6 +3,8 @@ import {
 	PrimaryGeneratedColumn,
 	Column,
 	CreateDateColumn,
+	UpdateDateColumn,
+	BeforeUpdate,
 } from 'typeorm';
 
 @Entity('students')
@@ -18,4 +20,7 @@ export class Student {
 
 	@CreateDateColumn()
 	created: Date;
+
+	@UpdateDateColumn()
+	updated: Date;
 }
