@@ -1,4 +1,4 @@
-import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -8,6 +8,7 @@ import { CourseCategoryService } from '../category/category.service';
 import { CourseUpdateInput } from 'graphql.schema';
 import { CrudOperations } from 'common/services/crud.service';
 import { InstallmentService } from '../installment/installment.service';
+import { CourseInstallment } from '../installment/installment.entity';
 
 @Injectable()
 export class CourseService extends CrudOperations {
@@ -22,15 +23,15 @@ export class CourseService extends CrudOperations {
 		super(courseRepository);
 	}
 
-	async findAll(): Promise<Course[]> {
+	findAll(): Promise<Course[]> {
 		return super.findAll();
 	}
 
-	async findOneById(id: string): Promise<Course> {
+	findOneById(id: string): Promise<Course> {
 		return super.findOneById(id);
 	}
 
-	async findByCategory(id: string): Promise<Course[]> {
+	findByCategory(id: string): Promise<Course[]> {
 		return super.findAllBy({ where: { category: { id } } });
 	}
 
@@ -38,7 +39,7 @@ export class CourseService extends CrudOperations {
 		const { categoryId, installments: installmentsArray } = data;
 		let installments = [];
 		if (installmentsArray && installmentsArray.length > 0) {
-			installments = await this.installmentService.createFromArray(
+			installments = await this.installmentService.createMany(
 				installmentsArray,
 			);
 		}
@@ -52,15 +53,33 @@ export class CourseService extends CrudOperations {
 
 	async update(id: string, data: CourseUpdateInput): Promise<Course> {
 		let dataOpc = {};
-		const { categoryId } = data;
+		const { categoryId, installments: installmentsArray } = data;
 		if (categoryId) {
 			const category = await this.categoryService.findOneById(categoryId);
 			dataOpc = { category };
 		}
+		if (installmentsArray && installmentsArray.length > 0) {
+			const course = await this.findOneById(id);
+			await this.removeInstallments(course);
+			const installments = await this.installmentService.updateMany(
+				course,
+				installmentsArray,
+			);
+			dataOpc = { ...dataOpc, installments };
+		}
 		return super.update(id, { ...data, ...dataOpc });
 	}
 
-	async delete(id: string): Promise<Course> {
+	async removeInstallments(course: Course) {
+		await this.courseRepository
+			.createQueryBuilder()
+			.delete()
+			.from(CourseInstallment)
+			.where('courseId = :id', { id: course.id })
+			.execute();
+	}
+
+	delete(id: string): Promise<Course> {
 		return super.delete(id);
 	}
 }

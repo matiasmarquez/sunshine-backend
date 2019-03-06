@@ -27,6 +27,7 @@ input CourseCreateInput {
 input CourseUpdateInput {
 	name: String
 	categoryId: String
+	installments: [CourseInstallmentCreateInput]
 	briefDescription: String
 	description: String
 	duration: String
