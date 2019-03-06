@@ -2,13 +2,16 @@ import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { CrudOperations } from 'common/services/crud.service';
+
 import { Course } from './course.entity';
 import { CourseCreateDTO } from './dto/course.create.dto';
-import { CourseCategoryService } from '../category/category.service';
 import { CourseUpdateInput } from 'graphql.schema';
-import { CrudOperations } from 'common/services/crud.service';
-import { InstallmentService } from '../installment/installment.service';
+
+import { CourseCategoryService } from '../category/category.service';
+
 import { CourseInstallment } from '../installment/installment.entity';
+import { InstallmentService } from '../installment/installment.service';
 
 @Injectable()
 export class CourseService extends CrudOperations {

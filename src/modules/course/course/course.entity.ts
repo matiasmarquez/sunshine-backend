@@ -7,7 +7,6 @@ import {
 	ManyToMany,
 	JoinTable,
 	OneToMany,
-	JoinColumn,
 } from 'typeorm';
 
 import { CourseCategory } from '../category/category.entity';
