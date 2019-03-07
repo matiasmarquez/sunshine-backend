@@ -11,7 +11,7 @@ import {
 
 import { CourseCategory } from '../category/category.entity';
 import { CourseInstallment } from '../installment/installment.entity';
-import { Person } from 'modules/staff/person.entity';
+import { Person } from 'modules/staff/person/person.entity';
 
 @Entity('courses')
 export class Course {
