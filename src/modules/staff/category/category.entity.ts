@@ -6,10 +6,10 @@ import {
 	CreateDateColumn,
 } from 'typeorm';
 
-import { Person } from './person.entity';
+import { Person } from '../person/person.entity';
 
-@Entity('staff_people_categories')
-export class PersonCategory {
+@Entity('staff_categories')
+export class StaffCategory {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
@@ -19,7 +19,9 @@ export class PersonCategory {
 	@Column('varchar')
 	name: string;
 
-	@Column('text')
+	@Column('text', {
+		nullable: true,
+	})
 	description: string;
 
 	@CreateDateColumn()
