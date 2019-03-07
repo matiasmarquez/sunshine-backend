@@ -23,5 +23,6 @@ import { InstallmentService } from './installment/installment.service';
 		CourseCategoryResolver,
 		InstallmentService,
 	],
+	exports: [CourseService],
 })
 export class CourseModule {}
