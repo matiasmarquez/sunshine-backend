@@ -27,15 +27,28 @@ export class CourseService extends CrudOperations {
 	}
 
 	findAll(): Promise<Course[]> {
-		return super.findAll();
+		return super.findAll(['staff']);
 	}
 
 	findOneById(id: string): Promise<Course> {
-		return super.findOneById(id);
+		return super.findOneById(id, ['staff']);
+	}
+
+	findByIds(ids: string[]): Promise<Course[]> | [] {
+		if (ids.length === 0) {
+			return [];
+		}
+		return this.courseRepository
+			.createQueryBuilder('course')
+			.where('course.id IN (:ids)', { ids })
+			.getMany();
 	}
 
 	findByCategory(id: string): Promise<Course[]> {
-		return super.findAllBy({ where: { category: { id } } });
+		return super.findAllBy({
+			where: { category: { id } },
+			relations: ['staff'],
+		});
 	}
 
 	async create(data: CourseCreateDTO): Promise<Course> {
