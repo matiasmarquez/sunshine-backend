@@ -1,15 +1,11 @@
 import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { CourseService } from './course.service';
-import { CourseCategoryService } from '../category/category.service';
 import { CourseCreateDTO } from './dto/course.create.dto';
 import { CourseUpdateInput } from 'graphql.schema';
 
 @Resolver()
 export class CourseResolver {
-	constructor(
-		private readonly courseService: CourseService,
-		private readonly categoryService: CourseCategoryService,
-	) {}
+	constructor(private readonly courseService: CourseService) {}
 
 	@Query()
 	courses() {
