@@ -5,6 +5,7 @@ type Course {
 	name: String!
 	category: CourseCategory!
 	installments: [CourseInstallment]
+	staff: [StaffPerson]
 	briefDescription: String
 	description: String
 	duration: String!
