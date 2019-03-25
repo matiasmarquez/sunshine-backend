@@ -29,4 +29,17 @@ export class Person {
 
 	@Column('varchar')
 	lastName: string;
+
+	@Column('varchar')
+	address: string;
+
+	@Column('varchar', {
+		nullable: true,
+	})
+	phone: string;
+
+	@Column('varchar', {
+		nullable: true,
+	})
+	email: string;
 }

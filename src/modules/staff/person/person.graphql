@@ -2,6 +2,9 @@ type StaffPerson {
 	id: ID!
 	name: String!
 	lastName: String!
+	address: String
+	phone: String
+	email: String
 	category: StaffCategory!
 	courses: [Course]
 }
@@ -9,6 +12,9 @@ type StaffPerson {
 input StaffPersonCreateInput {
 	name: String!
 	lastName: String!
+	address: String
+	phone: String
+	email: String
 	categoryId: String!
 	coursesIds: [String]
 }
@@ -16,6 +22,9 @@ input StaffPersonCreateInput {
 input StaffPersonUpdateInput {
 	name: String
 	lastName: String
+	address: String
+	phone: String
+	email: String
 	categoryId: String
 	coursesIds: [String]
 }
