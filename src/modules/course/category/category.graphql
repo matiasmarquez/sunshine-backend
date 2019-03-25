@@ -23,15 +23,15 @@ input CourseCategoryUpdateInput {
 
 type Query {
 	courseCategories: [CourseCategory]!
-	courseCategory(id: String!): CourseCategory!
+	courseCategory(id: ID!): CourseCategory!
 	courseCategoryColors: [String]
 }
 
 type Mutation {
 	createCourseCategory(data: CourseCategoryCreateInput): CourseCategory!
 	updateCourseCategory(
-		id: String!
+		id: ID!
 		data: CourseCategoryUpdateInput
 	): CourseCategory!
-	deleteCourseCategory(id: String!): CourseCategory!
+	deleteCourseCategory(id: ID!): CourseCategory!
 }
