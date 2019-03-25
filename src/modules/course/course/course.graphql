@@ -38,11 +38,11 @@ input CourseUpdateInput {
 
 type Query {
 	courses: [Course]!
-	course(id: String!): Course!
+	course(id: ID!): Course!
 }
 
 type Mutation {
 	createCourse(data: CourseCreateInput!): Course!
-	updateCourse(id: String!, data: CourseUpdateInput!): Course!
-	deleteCourse(id: String!): Course!
+	updateCourse(id: ID!, data: CourseUpdateInput!): Course!
+	deleteCourse(id: ID!): Course!
 }
