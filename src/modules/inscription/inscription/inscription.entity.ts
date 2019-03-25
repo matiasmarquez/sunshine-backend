@@ -6,10 +6,11 @@ import {
 	OneToMany,
 } from 'typeorm';
 
-import { Course } from 'src/course/course.entity';
-import { Student } from 'src/student/student.entity';
-import { InscriptionInstallment } from './installment.entity';
-import { InscriptionPayState } from './paystates.entity';
+import { Course } from 'modules/course/course/course.entity';
+import { Student } from 'modules/student/student.entity';
+
+import { InscriptionInstallment } from '../installment/installment.entity';
+import { InscriptionPayState } from '../paystate/paystates.entity';
 
 @Entity('inscriptions')
 export class Inscription {
@@ -20,23 +21,38 @@ export class Inscription {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@ManyToOne(type => Course)
+	@ManyToOne(type => Course, {
+		eager: true,
+	})
 	course: Course;
 
-	@ManyToOne(type => Student)
+	@ManyToOne(type => Student, {
+		eager: true,
+	})
 	student: Student;
 
 	@OneToMany(
 		type => InscriptionInstallment,
 		installment => installment.inscription,
+		{
+			eager: true,
+			cascade: true,
+		},
 	)
 	installments: InscriptionInstallment[];
 
-	@OneToMany(type => InscriptionPayState, paystate => paystate.inscription)
-	paystates: InscriptionPayState[];
+	@OneToMany(type => InscriptionPayState, paystate => paystate.inscription, {
+		eager: true,
+	})
+	payStates: InscriptionPayState[];
 
 	@Column('varchar')
 	state: string;
+
+	@Column('varchar', {
+		nullable: true,
+	})
+	currentPayState: string;
 
 	@Column({
 		type: 'float',

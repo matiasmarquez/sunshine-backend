@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
 
-import { Inscription } from './inscription.entity';
-import { InscriptionInstallment } from './installment.entity';
+import { Inscription } from '../inscription/inscription.entity';
+import { InscriptionInstallment } from '../installment/installment.entity';
 
 @Entity('inscriptions_pay_states')
 export class InscriptionPayState {
@@ -12,15 +12,22 @@ export class InscriptionPayState {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@ManyToOne(type => Inscription, inscription => inscription.paystates)
+	@ManyToOne(type => Inscription, inscription => inscription.payStates, {
+		onDelete: 'CASCADE',
+	})
 	inscription: Inscription;
 
-	@ManyToOne(type => InscriptionInstallment)
+	@ManyToOne(type => InscriptionInstallment, {
+		eager: true,
+		nullable: true,
+	})
 	installment: InscriptionInstallment;
 
 	@Column('varchar')
 	state: string;
 
-	@Column('boolean')
+	@Column('boolean', {
+		default: false,
+	})
 	fullPayment: boolean;
 }
