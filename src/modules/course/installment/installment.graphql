@@ -6,6 +6,7 @@ type CourseInstallment {
 }
 
 input CourseInstallmentCreateInput {
+	id: ID
 	number: Int!
 	price: Float!
 }
