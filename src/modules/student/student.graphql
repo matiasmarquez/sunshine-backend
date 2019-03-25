@@ -4,6 +4,9 @@ type Student {
 	id: ID!
 	name: String!
 	lastName: String!
+	address: String!
+	phone: String
+	email: String
 	created: Date!
 	updated: Date
 }
@@ -11,15 +14,29 @@ type Student {
 input StudentCreateInput {
 	name: String!
 	lastName: String!
+	address: String!
+	phone: String
+	email: String
 }
 
 input StudentUpdateInput {
 	name: String
 	lastName: String
+	address: String
+	phone: String
+	email: String
+}
+
+input StudentWhereInput {
+	name: String
+	lastName: String
+	address: String
+	phone: String
+	email: String
 }
 
 type Query {
-	students: [Student!]
+	students(where: StudentWhereInput): [Student!]
 	student(id: String!): Student
 }
 
