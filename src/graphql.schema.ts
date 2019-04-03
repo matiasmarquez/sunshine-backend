@@ -15,7 +15,6 @@ export abstract class CourseCreateInput {
     name: string;
     categoryId: string;
     installments?: CourseInstallmentCreateInput[];
-    briefDescription?: string;
     description?: string;
     duration: string;
     schedule: string;
@@ -32,7 +31,6 @@ export abstract class CourseUpdateInput {
     name?: string;
     categoryId?: string;
     installments?: CourseInstallmentCreateInput[];
-    briefDescription?: string;
     description?: string;
     duration?: string;
     schedule?: string;
@@ -120,7 +118,6 @@ export abstract class Course {
     category: CourseCategory;
     installments?: CourseInstallment[];
     staff?: StaffPerson[];
-    briefDescription?: string;
     description?: string;
     duration: string;
     schedule: string;
@@ -172,12 +169,6 @@ export abstract class InscriptionPayState {
 }
 
 export abstract class IMutation {
-    abstract createCourse(data: CourseCreateInput): Course | Promise<Course>;
-
-    abstract updateCourse(id: string, data: CourseUpdateInput): Course | Promise<Course>;
-
-    abstract deleteCourse(id: string): Course | Promise<Course>;
-
     abstract createStudent(data: StudentCreateInput): Student | Promise<Student>;
 
     abstract updateStudent(id: string, data: StudentUpdateInput): Student | Promise<Student>;
@@ -189,6 +180,12 @@ export abstract class IMutation {
     abstract updateCourseCategory(id: string, data?: CourseCategoryUpdateInput): CourseCategory | Promise<CourseCategory>;
 
     abstract deleteCourseCategory(id: string): CourseCategory | Promise<CourseCategory>;
+
+    abstract createCourse(data: CourseCreateInput): Course | Promise<Course>;
+
+    abstract updateCourse(id: string, data: CourseUpdateInput): Course | Promise<Course>;
+
+    abstract deleteCourse(id: string): Course | Promise<Course>;
 
     abstract createInscription(data: InscriptionCreateInput): Inscription | Promise<Inscription>;
 
@@ -210,21 +207,21 @@ export abstract class IMutation {
 }
 
 export abstract class IQuery {
-    abstract users(): User[] | Promise<User[]>;
-
-    abstract courses(): Course[] | Promise<Course[]>;
-
-    abstract course(id: string): Course | Promise<Course>;
-
     abstract students(where?: StudentWhereInput): Student[] | Promise<Student[]>;
 
     abstract student(id: string): Student | Promise<Student>;
+
+    abstract users(): User[] | Promise<User[]>;
 
     abstract courseCategories(): CourseCategory[] | Promise<CourseCategory[]>;
 
     abstract courseCategory(id: string): CourseCategory | Promise<CourseCategory>;
 
     abstract courseCategoryColors(): string[] | Promise<string[]>;
+
+    abstract courses(): Course[] | Promise<Course[]>;
+
+    abstract course(id: string): Course | Promise<Course>;
 
     abstract inscriptions(): Inscription[] | Promise<Inscription[]>;
 
@@ -236,7 +233,7 @@ export abstract class IQuery {
 
     abstract staffPeople(): StaffPerson[] | Promise<StaffPerson[]>;
 
-    abstract staffPerson(id?: string): StaffPerson | Promise<StaffPerson>;
+    abstract staffPerson(id: string): StaffPerson | Promise<StaffPerson>;
 
     abstract temp__(): boolean | Promise<boolean>;
 }
