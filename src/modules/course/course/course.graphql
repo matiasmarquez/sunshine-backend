@@ -1,0 +1,45 @@
+scalar Date
+
+type Course {
+	id: ID!
+	name: String!
+	category: CourseCategory!
+	installments: [CourseInstallment]
+	staff: [StaffPerson]
+	description: String
+	duration: String!
+	schedule: String!
+	price: Float!
+	created: Date
+}
+
+input CourseCreateInput {
+	name: String!
+	categoryId: String!
+	installments: [CourseInstallmentCreateInput]
+	description: String
+	duration: String!
+	schedule: String!
+	price: Float!
+}
+
+input CourseUpdateInput {
+	name: String
+	categoryId: String
+	installments: [CourseInstallmentCreateInput]
+	description: String
+	duration: String
+	schedule: String
+	price: Float
+}
+
+type Query {
+	courses: [Course]!
+	course(id: ID!): Course!
+}
+
+type Mutation {
+	createCourse(data: CourseCreateInput!): Course!
+	updateCourse(id: ID!, data: CourseUpdateInput!): Course!
+	deleteCourse(id: ID!): Course!
+}

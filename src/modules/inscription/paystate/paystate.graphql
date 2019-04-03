@@ -1,0 +1,7 @@
+type InscriptionPayState {
+	id: ID!
+	inscription: Inscription!
+	installment: InscriptionInstallment
+	state: String!
+	fullPayment: Boolean!
+}

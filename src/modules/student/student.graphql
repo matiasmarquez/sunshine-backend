@@ -1,0 +1,39 @@
+scalar Date
+
+type Student {
+	id: ID!
+	name: String!
+	lastName: String!
+	address: String!
+	phone: String
+	email: String
+	created: Date!
+	updated: Date
+}
+
+input StudentCreateInput {
+	name: String!
+	lastName: String!
+	address: String!
+	phone: String
+	email: String
+}
+
+input StudentUpdateInput {
+	name: String
+	lastName: String
+	address: String
+	phone: String
+	email: String
+}
+
+type Query {
+	students: [Student!]
+	student(id: String!): Student
+}
+
+type Mutation {
+	createStudent(data: StudentCreateInput!): Student!
+	updateStudent(id: ID!, data: StudentUpdateInput!): Student!
+	deleteStudent(id: ID!): Student!
+}
