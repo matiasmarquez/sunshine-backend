@@ -31,11 +31,11 @@ input StaffPersonUpdateInput {
 
 type Query {
 	staffPeople: [StaffPerson]!
-	staffPerson(id: String): StaffPerson!
+	staffPerson(id: ID!): StaffPerson!
 }
 
 type Mutation {
 	createStaffPerson(data: StaffPersonCreateInput!): StaffPerson!
-	updateStaffPerson(id: String!, data: StaffPersonUpdateInput!): StaffPerson!
-	deleteStaffPerson(id: String!): StaffPerson!
+	updateStaffPerson(id: ID!, data: StaffPersonUpdateInput!): StaffPerson!
+	deleteStaffPerson(id: ID!): StaffPerson!
 }
