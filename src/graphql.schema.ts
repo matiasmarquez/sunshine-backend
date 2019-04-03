@@ -104,14 +104,6 @@ export abstract class StudentUpdateInput {
     email?: string;
 }
 
-export abstract class StudentWhereInput {
-    name?: string;
-    lastName?: string;
-    address?: string;
-    phone?: string;
-    email?: string;
-}
-
 export abstract class Course {
     id: string;
     name: string;
@@ -207,7 +199,7 @@ export abstract class IMutation {
 }
 
 export abstract class IQuery {
-    abstract students(where?: StudentWhereInput): Student[] | Promise<Student[]>;
+    abstract students(): Student[] | Promise<Student[]>;
 
     abstract student(id: string): Student | Promise<Student>;
 
