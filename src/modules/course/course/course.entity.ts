@@ -52,11 +52,6 @@ export class Course {
 	@Column('text', {
 		nullable: true,
 	})
-	briefDescription: string;
-
-	@Column('text', {
-		nullable: true,
-	})
 	description: string;
 
 	@Column('varchar')

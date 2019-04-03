@@ -6,7 +6,6 @@ type Course {
 	category: CourseCategory!
 	installments: [CourseInstallment]
 	staff: [StaffPerson]
-	briefDescription: String
 	description: String
 	duration: String!
 	schedule: String!
@@ -18,7 +17,6 @@ input CourseCreateInput {
 	name: String!
 	categoryId: String!
 	installments: [CourseInstallmentCreateInput]
-	briefDescription: String
 	description: String
 	duration: String!
 	schedule: String!
@@ -29,7 +27,6 @@ input CourseUpdateInput {
 	name: String
 	categoryId: String
 	installments: [CourseInstallmentCreateInput]
-	briefDescription: String
 	description: String
 	duration: String
 	schedule: String
