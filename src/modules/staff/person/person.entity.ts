@@ -30,7 +30,9 @@ export class Person {
 	@Column('varchar')
 	lastName: string;
 
-	@Column('varchar')
+	@Column('varchar', {
+		nullable: true,
+	})
 	address: string;
 
 	@Column('varchar', {
