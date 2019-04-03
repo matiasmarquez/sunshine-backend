@@ -24,7 +24,6 @@ input CourseCategoryUpdateInput {
 type Query {
 	courseCategories: [CourseCategory]!
 	courseCategory(id: ID!): CourseCategory!
-	courseCategoryColors: [String]
 }
 
 type Mutation {

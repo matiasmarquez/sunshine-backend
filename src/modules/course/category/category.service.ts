@@ -20,10 +20,6 @@ export class CourseCategoryService extends CrudOperations {
 		return super.findAll();
 	}
 
-	async findAllColors(): Promise<string[]> {
-		return await CourseCategory.colors;
-	}
-
 	async findOneById(id: string): Promise<CourseCategory> {
 		return super.findOneById(id);
 	}
