@@ -16,14 +16,11 @@ input StaffCategoryUpdateInput {
 
 type Query {
 	staffCategories: [StaffCategory]!
-	staffCategory(id: String!): StaffCategory!
+	staffCategory(id: ID!): StaffCategory!
 }
 
 type Mutation {
 	createStaffCategory(data: StaffCategoryCreateInput!): StaffCategory!
-	updateStaffCategory(
-		id: String!
-		data: StaffCategoryUpdateInput!
-	): StaffCategory!
-	deleteStaffCategory(id: String!): StaffCategory!
+	updateStaffCategory(id: ID!, data: StaffCategoryUpdateInput!): StaffCategory!
+	deleteStaffCategory(id: ID!): StaffCategory!
 }
