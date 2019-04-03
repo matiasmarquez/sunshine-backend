@@ -15,8 +15,8 @@ export class StudentService extends CrudOperations {
 		super(studentRepository);
 	}
 
-	async findAll(): Promise<Student[]> {
-		return super.findAll();
+	async find(): Promise<Student[]> {
+		return await this.studentRepository.findAll();
 	}
 
 	async findOneById(id: string): Promise<Student> {
