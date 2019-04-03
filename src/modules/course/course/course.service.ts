@@ -1,11 +1,11 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 import { CrudOperations } from 'common/services/crud.service';
 
 import { Course } from './course.entity';
 import { CourseCreateDTO } from './dto/course.create.dto';
+import { CourseRepository } from './course.repository';
 import { CourseUpdateInput } from 'graphql.schema';
 
 import { CourseCategoryService } from '../category/category.service';
@@ -17,7 +17,7 @@ import { InstallmentService } from '../installment/installment.service';
 export class CourseService extends CrudOperations {
 	constructor(
 		@InjectRepository(Course)
-		protected readonly courseRepository: Repository<Course>,
+		protected readonly courseRepository: CourseRepository,
 		@Inject(CourseCategoryService)
 		protected readonly categoryService: CourseCategoryService,
 		@Inject(InstallmentService)
@@ -27,11 +27,11 @@ export class CourseService extends CrudOperations {
 	}
 
 	findAll(): Promise<Course[]> {
-		return super.findAll(['staff']);
+		return this.courseRepository.findAll();
 	}
 
 	findOneById(id: string): Promise<Course> {
-		return super.findOneById(id, ['staff']);
+		return this.courseRepository.findOneById(id);
 	}
 
 	findByIds(ids: string[]): Promise<Course[]> | [] {
