@@ -13,7 +13,7 @@ export class StudentResolver {
 
 	@Query()
 	students(): Student[] | Promise<Student[]> {
-		return this.service.findAll();
+		return this.service.find();
 	}
 
 	@Query()
