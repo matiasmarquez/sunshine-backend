@@ -27,16 +27,8 @@ input StudentUpdateInput {
 	email: String
 }
 
-input StudentWhereInput {
-	name: String
-	lastName: String
-	address: String
-	phone: String
-	email: String
-}
-
 type Query {
-	students(where: StudentWhereInput): [Student!]
+	students: [Student!]
 	student(id: String!): Student
 }
 
