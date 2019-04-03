@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Course } from './course/course.entity';
 import { CourseService } from './course/course.service';
 import { CourseResolver } from './course/course.resolver';
+import { CourseRepository } from './course/course.repository';
 
 import { CourseCategory } from './category/category.entity';
 import { CourseCategoryService } from './category/category.service';
@@ -14,7 +15,12 @@ import { InstallmentService } from './installment/installment.service';
 
 @Module({
 	imports: [
-		TypeOrmModule.forFeature([Course, CourseCategory, CourseInstallment]),
+		TypeOrmModule.forFeature([
+			Course,
+			CourseRepository,
+			CourseCategory,
+			CourseInstallment,
+		]),
 	],
 	providers: [
 		CourseService,
