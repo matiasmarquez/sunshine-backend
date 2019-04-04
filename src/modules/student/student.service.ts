@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Student } from './student.entity';
@@ -6,11 +6,15 @@ import { StudentCreateDTO } from './dto/student.create.dto';
 import { CrudOperations } from 'common/services/crud.service';
 import { StudentRepository } from './student.repository';
 
+import { ParentService } from 'modules/parent/parent.service';
+
 @Injectable()
 export class StudentService extends CrudOperations {
 	constructor(
 		@InjectRepository(StudentRepository)
 		protected readonly studentRepository: StudentRepository,
+		@Inject(ParentService)
+		protected readonly parentService: ParentService,
 	) {
 		super(studentRepository);
 	}
@@ -20,15 +24,31 @@ export class StudentService extends CrudOperations {
 	}
 
 	async findOneById(id: string): Promise<Student> {
-		return super.findOneById(id);
+		return await this.studentRepository.findOneById(id);
 	}
 
 	async create(data: StudentCreateDTO): Promise<Student> {
-		return super.create(data);
+		const { parents: parentsArray } = data;
+		let parents = [];
+		if (parentsArray && parentsArray.length > 0) {
+			parents = await this.parentService.createMany(parentsArray);
+		}
+		return super.create({ ...data, parents });
 	}
 
 	async update(id: string, data: Partial<StudentCreateDTO>): Promise<Student> {
-		return super.update(id, data);
+		let dataOpc = {};
+		const { parents: parentsArray } = data;
+		if (parentsArray && parentsArray.length > 0) {
+			const student = await this.findOneById(id);
+			await this.studentRepository.removeParents(student);
+			const parents = await this.parentService.updateMany(
+				student,
+				parentsArray,
+			);
+			dataOpc = { parents };
+		}
+		return super.update(id, { ...data, ...dataOpc });
 	}
 
 	async delete(id: string): Promise<Student> {

@@ -4,13 +4,21 @@ import {
 	Column,
 	CreateDateColumn,
 	UpdateDateColumn,
-	BeforeUpdate,
+	OneToMany,
 } from 'typeorm';
+
+import { Parent } from 'modules/parent/parent.entity';
 
 @Entity('students')
 export class Student {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
+
+	@OneToMany(type => Parent, parent => parent.student, {
+		cascade: true,
+		eager: true,
+	})
+	parents: Parent[];
 
 	@Column('varchar')
 	name: string;

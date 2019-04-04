@@ -2,6 +2,7 @@ scalar Date
 
 type Student {
 	id: ID!
+	parents: [Parent]
 	name: String!
 	lastName: String!
 	address: String!
@@ -13,6 +14,7 @@ type Student {
 
 input StudentCreateInput {
 	name: String!
+	parents: [ParentCreateInput]
 	lastName: String!
 	address: String!
 	phone: String
@@ -21,6 +23,7 @@ input StudentCreateInput {
 
 input StudentUpdateInput {
 	name: String
+	parents: [ParentCreateInput]
 	lastName: String
 	address: String
 	phone: String
