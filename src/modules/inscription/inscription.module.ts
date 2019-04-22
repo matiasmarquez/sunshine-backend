@@ -9,9 +9,6 @@ import { InscriptionResolver } from './inscription/inscription.resolver';
 import { InstallmentService } from './installment/installment.service';
 import { InscriptionInstallment } from './installment/installment.entity';
 
-import { PaystateService } from './paystate/paystate.service';
-import { InscriptionPayState } from './paystate/paystates.entity';
-
 import { CourseModule } from 'modules/course/course.module';
 import { StudentModule } from 'modules/student/student.module';
 import { InscriptionInstallmentRepository } from './installment/installment.repository';
@@ -23,16 +20,10 @@ import { InscriptionInstallmentRepository } from './installment/installment.repo
 			InscriptionRepository,
 			InscriptionInstallment,
 			InscriptionInstallmentRepository,
-			InscriptionPayState,
 		]),
 		CourseModule,
 		StudentModule,
 	],
-	providers: [
-		InscriptionService,
-		InscriptionResolver,
-		InstallmentService,
-		PaystateService,
-	],
+	providers: [InscriptionService, InscriptionResolver, InstallmentService],
 })
 export class InscriptionModule {}

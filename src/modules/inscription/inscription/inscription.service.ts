@@ -7,12 +7,10 @@ import { Inscription } from './inscription.entity';
 import { InscriptionRepository } from './inscription.repository';
 
 import { InstallmentService } from '../installment/installment.service';
-import { PaystateService } from '../paystate/paystate.service';
 
 import { CourseService } from 'modules/course/course/course.service';
 import { StudentService } from 'modules/student/student.service';
 import { InscriptionUpdateInput } from 'graphql.schema';
-import { InscriptionPayState } from '../paystate/paystates.entity';
 
 @Injectable()
 export class InscriptionService extends CrudOperations {
@@ -21,8 +19,6 @@ export class InscriptionService extends CrudOperations {
 		protected readonly inscriptionRepository: InscriptionRepository,
 		@Inject(InstallmentService)
 		protected readonly installmentService: InstallmentService,
-		@Inject(PaystateService)
-		protected readonly paystateService: PaystateService,
 		@Inject(CourseService)
 		protected readonly courseService: CourseService,
 		@Inject(StudentService)
@@ -52,10 +48,9 @@ export class InscriptionService extends CrudOperations {
 			student,
 			installments,
 			price,
-			state: Inscription.STARTED_STATE,
+			state: Inscription.IN_PROGRESS_STATE,
 		});
-		const updated = await this.updatePaystate(inscription);
-		return updated;
+		return inscription;
 	}
 
 	// No permitir actualizar cuando ya se realizo un pago o se pago completamente.
@@ -72,13 +67,5 @@ export class InscriptionService extends CrudOperations {
 
 	delete(id: string): Promise<Inscription> {
 		return super.delete(id);
-	}
-
-	async updatePaystate(inscription: Inscription): Promise<Inscription> {
-		const paystate = await this.paystateService.create(inscription);
-		return await super.update(inscription.id, {
-			payStates: [paystate],
-			currentPayState: paystate.state,
-		});
 	}
 }
