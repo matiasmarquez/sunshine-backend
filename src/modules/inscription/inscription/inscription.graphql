@@ -2,7 +2,6 @@ type Inscription {
 	id: ID!
 	course: Course!
 	installments: [InscriptionInstallment]
-	payStates: [InscriptionPayState]!
 	student: Student!
 	price: Float
 	state: String!

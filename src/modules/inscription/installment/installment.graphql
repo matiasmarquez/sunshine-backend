@@ -1,18 +1,18 @@
 type InscriptionInstallment {
 	id: ID!
-	number: Int!
+	date: Date!
 	price: Float!
 	paid: Boolean
 	inscription: Inscription!
 }
 
 input InscriptionInstallmentCreateInput {
-	number: Int!
+	date: Date!
 	price: Float!
 }
 
 input InscriptionInstallmentUpdateInput {
-	number: Int!
+	date: Date!
 	price: Float!
 	paid: Boolean
 }

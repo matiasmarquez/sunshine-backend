@@ -6,8 +6,13 @@ import { StudentService } from './student.service';
 import { StudentResolver } from './student.resolver';
 import { StudentRepository } from './student.repository';
 
+import { ParentModule } from 'modules/parent/parent.module';
+
 @Module({
-	imports: [TypeOrmModule.forFeature([Student, StudentRepository])],
+	imports: [
+		TypeOrmModule.forFeature([Student, StudentRepository]),
+		ParentModule,
+	],
 	providers: [StudentService, StudentResolver],
 	exports: [StudentService],
 })

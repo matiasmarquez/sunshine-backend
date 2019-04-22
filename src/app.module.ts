@@ -15,6 +15,7 @@ import { UserModule } from './modules/user/user.module';
 import { CourseModule } from './modules/course/course.module';
 import { StaffModule } from './modules/staff/staff.module';
 import { InscriptionModule } from './modules/inscription/inscription.module';
+import { ParentModule } from './modules/parent/parent.module';
 
 @Module({
 	imports: [
@@ -31,6 +32,7 @@ import { InscriptionModule } from './modules/inscription/inscription.module';
 		CourseModule,
 		StaffModule,
 		InscriptionModule,
+		ParentModule,
 	],
 	controllers: [AppController],
 	providers: [

@@ -29,8 +29,4 @@ export class CourseCategory {
 
 	@CreateDateColumn()
 	created: Date;
-
-	public static get colors() {
-		return ['#E67401', '#009C53', '#DD3624', '#0061A8', '#7C2282'];
-	}
 }

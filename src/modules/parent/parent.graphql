@@ -1,0 +1,29 @@
+type Parent {
+	id: ID!
+	student: Student!
+	name: String!
+	lastName: String!
+	type: Int!
+	phone: String!
+	comment: String
+}
+
+type ParentType {
+	id: Int!
+	type: String!
+}
+
+input ParentCreateInput {
+	id: String
+	name: String!
+	lastName: String!
+	type: Int!
+	phone: String!
+	comment: String
+}
+
+type Query {
+	parents: [Parent]!
+	parent(id: ID!): Parent
+	parentTypes: [ParentType]
+}

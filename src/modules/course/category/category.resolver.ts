@@ -32,11 +32,6 @@ export class CourseCategoryResolver {
 		return this.service.findOneById(id);
 	}
 
-	@Query()
-	courseCategoryColors() {
-		return this.service.findAllColors();
-	}
-
 	@Mutation()
 	@UsePipes(new ValidationPipe())
 	createCourseCategory(@Args('data') data: CourseCategoryCreateDTO) {

@@ -4,8 +4,8 @@ export abstract class InstallmentAbstract {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column('int')
-	number: number;
+	@Column('date')
+	date: Date;
 
 	@Column({
 		type: 'float',
