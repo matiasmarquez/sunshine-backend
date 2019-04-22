@@ -39,6 +39,16 @@ export class Student {
 	})
 	email: string;
 
+	@Column('varchar', {
+		nullable: true,
+	})
+	school: string;
+
+	@Column('varchar', {
+		nullable: true,
+	})
+	degree: string;
+
 	@CreateDateColumn()
 	created: Date;
 

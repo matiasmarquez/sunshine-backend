@@ -8,6 +8,8 @@ type Student {
 	address: String!
 	phone: String
 	email: String
+	school: String
+	degree: String
 	created: Date!
 	updated: Date
 }
@@ -19,6 +21,8 @@ input StudentCreateInput {
 	address: String!
 	phone: String
 	email: String
+	school: String
+	degree: String
 }
 
 input StudentUpdateInput {
@@ -28,6 +32,8 @@ input StudentUpdateInput {
 	address: String
 	phone: String
 	email: String
+	school: String
+	degree: String
 }
 
 type Query {
