@@ -1,12 +1,12 @@
 type CourseInstallment {
 	id: ID!
-	number: Int!
+	date: Date!
 	price: Float!
 	course: Course!
 }
 
 input CourseInstallmentCreateInput {
 	id: ID
-	number: Int!
+	date: Date!
 	price: Float!
 }
