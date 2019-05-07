@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import {
-	CourseInstallment,
-	InscriptionInstallmentCreateInput,
-} from 'graphql.schema';
-
-import { InscriptionInstallment } from './installment.entity';
 import { InscriptionInstallmentRepository } from './installment.repository';
+import { InscriptionInstallment } from 'modules/inscription/installment/installment.entity';
+import { InscriptionInstallmentCreateDTO } from 'modules/inscription/installment/dto/installment.create.dto';
+import { Inscription } from 'modules/inscription/inscription/inscription.entity';
 
 @Injectable()
 export class InstallmentService {
@@ -16,26 +13,45 @@ export class InstallmentService {
 		protected readonly installmentRepository: InscriptionInstallmentRepository,
 	) {}
 
-	createMany(
-		installments:
-			| CourseInstallment[]
-			| InscriptionInstallmentCreateInput[]
-			| [],
-	): InscriptionInstallment[] | [] {
-		let out = [];
-		if (installments.length === 0) {
-			return out;
-		}
-		for (let installment of installments) {
-			out.push(this.create(<any>installment));
-		}
-		return out;
+	async createMany(
+		array: InscriptionInstallmentCreateDTO[],
+	): Promise<InscriptionInstallment[]> {
+		const installments = array.map(
+			async (installment: InscriptionInstallmentCreateDTO) => {
+				return await this.create(installment);
+			},
+		);
+		return await Promise.all(installments);
 	}
 
-	create(
-		installment: CourseInstallment | InscriptionInstallmentCreateInput,
-	): InscriptionInstallment {
-		return this.repository.create(installment);
+	async create(
+		data: InscriptionInstallmentCreateDTO,
+	): Promise<InscriptionInstallment> {
+		const { inscription } = data;
+		if (inscription) {
+			return this.repository.create({ ...data, inscription });
+		}
+		return this.repository.create(data);
+	}
+
+	async updateMany(
+		inscription: Inscription,
+		array: InscriptionInstallmentCreateDTO[],
+	) {
+		const installments = array.map(
+			(installment: InscriptionInstallmentCreateDTO) => {
+				return this.update(inscription, installment);
+			},
+		);
+		return await Promise.all(installments);
+	}
+
+	async update(
+		inscription: Inscription,
+		data: InscriptionInstallmentCreateDTO,
+	) {
+		const created = await this.create({ ...data, inscription });
+		return created;
 	}
 
 	protected get repository(): InscriptionInstallmentRepository {
