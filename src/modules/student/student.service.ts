@@ -27,6 +27,10 @@ export class StudentService extends CrudOperations {
 		return await this.studentRepository.findOneById(id);
 	}
 
+	countAll(): Promise<Number> {
+		return this.studentRepository.countAll();
+	}
+
 	async create(data: StudentCreateDTO): Promise<Student> {
 		const { parents: parentsArray } = data;
 		let parents = [];

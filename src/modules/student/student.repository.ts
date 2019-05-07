@@ -26,6 +26,11 @@ export class StudentRepository extends Repository<Student> {
 			.execute();
 	}
 
+	public countAll(): Promise<Number> {
+		const qb = this.qb;
+		return qb.getCount();
+	}
+
 	private addJoins(
 		qb: SelectQueryBuilder<Student>,
 	): SelectQueryBuilder<Student> {
