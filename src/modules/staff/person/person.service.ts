@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 import { CrudOperations } from 'common/services/crud.service';
 import { StaffCategoryService } from '../category/category.service';
@@ -8,12 +7,13 @@ import { StaffCategoryService } from '../category/category.service';
 import { Person } from './person.entity';
 import { StaffPersonUpdateInput, StaffPersonCreateInput } from 'graphql.schema';
 import { CourseService } from 'modules/course/course/course.service';
+import { PersonRepository } from './person.repository';
 
 @Injectable()
 export class StaffPersonService extends CrudOperations {
 	constructor(
-		@InjectRepository(Person)
-		protected readonly personRepository: Repository<Person>,
+		@InjectRepository(PersonRepository)
+		protected readonly personRepository: PersonRepository,
 		@Inject(StaffCategoryService)
 		protected readonly categoryService: StaffCategoryService,
 		@Inject(CourseService)
@@ -32,6 +32,10 @@ export class StaffPersonService extends CrudOperations {
 
 	findByCategory(id: string): Promise<Person[]> {
 		return super.findAllBy({ where: { category: { id } } });
+	}
+
+	countAll(): Promise<Number> {
+		return this.personRepository.countAll();
 	}
 
 	async create(data: StaffPersonCreateInput): Promise<Person> {
