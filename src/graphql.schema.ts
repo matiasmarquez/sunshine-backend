@@ -40,22 +40,29 @@ export abstract class CourseUpdateInput {
 export abstract class InscriptionCreateInput {
     courseId: string;
     studentId: string;
+    installments?: InscriptionInstallmentCreateInput[];
+    price?: number;
 }
 
 export abstract class InscriptionInstallmentCreateInput {
     date: Date;
     price: number;
+    paid?: boolean;
+    comment?: string;
 }
 
 export abstract class InscriptionInstallmentUpdateInput {
     date: Date;
     price: number;
     paid?: boolean;
+    comment?: string;
 }
 
 export abstract class InscriptionUpdateInput {
-    price?: number;
+    courseId: string;
+    studentId: string;
     installments?: InscriptionInstallmentCreateInput[];
+    price?: number;
 }
 
 export abstract class ParentCreateInput {
@@ -155,7 +162,7 @@ export abstract class Inscription {
     student: Student;
     price?: number;
     state: string;
-    currentPayState: string;
+    hasInstallmentsNotPayed?: boolean;
 }
 
 export abstract class InscriptionInstallment {
@@ -163,6 +170,7 @@ export abstract class InscriptionInstallment {
     date: Date;
     price: number;
     paid?: boolean;
+    comment?: string;
     inscription: Inscription;
 }
 
@@ -191,17 +199,17 @@ export abstract class IMutation {
 
     abstract deleteInscription(id: string): Inscription | Promise<Inscription>;
 
-    abstract createStaffPerson(data: StaffPersonCreateInput): StaffPerson | Promise<StaffPerson>;
-
-    abstract updateStaffPerson(id: string, data: StaffPersonUpdateInput): StaffPerson | Promise<StaffPerson>;
-
-    abstract deleteStaffPerson(id: string): StaffPerson | Promise<StaffPerson>;
-
     abstract createStaffCategory(data: StaffCategoryCreateInput): StaffCategory | Promise<StaffCategory>;
 
     abstract updateStaffCategory(id: string, data: StaffCategoryUpdateInput): StaffCategory | Promise<StaffCategory>;
 
     abstract deleteStaffCategory(id: string): StaffCategory | Promise<StaffCategory>;
+
+    abstract createStaffPerson(data: StaffPersonCreateInput): StaffPerson | Promise<StaffPerson>;
+
+    abstract updateStaffPerson(id: string, data: StaffPersonUpdateInput): StaffPerson | Promise<StaffPerson>;
+
+    abstract deleteStaffPerson(id: string): StaffPerson | Promise<StaffPerson>;
 }
 
 export abstract class Parent {
@@ -220,17 +228,19 @@ export abstract class ParentType {
 }
 
 export abstract class IQuery {
-    abstract students(): Student[] | Promise<Student[]>;
-
-    abstract student(id: string): Student | Promise<Student>;
-
-    abstract users(): User[] | Promise<User[]>;
-
     abstract parents(): Parent[] | Promise<Parent[]>;
 
     abstract parent(id: string): Parent | Promise<Parent>;
 
     abstract parentTypes(): ParentType[] | Promise<ParentType[]>;
+
+    abstract students(): Student[] | Promise<Student[]>;
+
+    abstract student(id: string): Student | Promise<Student>;
+
+    abstract countStudents(): number | Promise<number>;
+
+    abstract users(): User[] | Promise<User[]>;
 
     abstract courseCategories(): CourseCategory[] | Promise<CourseCategory[]>;
 
@@ -240,17 +250,25 @@ export abstract class IQuery {
 
     abstract course(id: string): Course | Promise<Course>;
 
+    abstract countCourses(): number | Promise<number>;
+
     abstract inscriptions(): Inscription[] | Promise<Inscription[]>;
 
+    abstract inscriptionsNotPayed(): Inscription[] | Promise<Inscription[]>;
+
     abstract inscription(id: string): Inscription | Promise<Inscription>;
+
+    abstract countInscriptions(): number | Promise<number>;
+
+    abstract staffCategories(): StaffCategory[] | Promise<StaffCategory[]>;
+
+    abstract staffCategory(id: string): StaffCategory | Promise<StaffCategory>;
 
     abstract staffPeople(): StaffPerson[] | Promise<StaffPerson[]>;
 
     abstract staffPerson(id: string): StaffPerson | Promise<StaffPerson>;
 
-    abstract staffCategories(): StaffCategory[] | Promise<StaffCategory[]>;
-
-    abstract staffCategory(id: string): StaffCategory | Promise<StaffCategory>;
+    abstract countStaffPeople(): number | Promise<number>;
 
     abstract temp__(): boolean | Promise<boolean>;
 }
