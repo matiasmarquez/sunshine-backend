@@ -42,15 +42,34 @@ export class Inscription {
 	@Column('varchar')
 	state: string;
 
-	@Column('varchar', {
-		nullable: true,
-	})
-	currentPayState: string;
-
 	@Column({
 		type: 'float',
 		precision: 14,
 		scale: 2,
+		nullable: true,
 	})
 	price: number;
+
+	public hasInstallmentsNotPayed(): boolean {
+		let has = false;
+		const installments = this.installments;
+		const date = new Date();
+		const currentMonth = date.getMonth();
+		for (const installment of installments) {
+			let date = installment.date;
+			if (typeof installment.date === 'string') {
+				const parts = installment.date.split('-');
+				date = new Date(
+					parseInt(parts[0]),
+					parseInt(parts[1]) - 1,
+					parseInt(parts[2]),
+				);
+			}
+			if (currentMonth >= date.getMonth() && installment.paid === false) {
+				has = true;
+				break;
+			}
+		}
+		return has;
+	}
 }
