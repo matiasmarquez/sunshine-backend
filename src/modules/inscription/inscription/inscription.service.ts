@@ -35,34 +35,54 @@ export class InscriptionService extends CrudOperations {
 		return super.findOneById(id);
 	}
 
+	findNotPayed(): Promise<Inscription[]> {
+		return this.inscriptionRepository.findNotPayed();
+	}
+
+	countAll(): Promise<Number> {
+		return this.inscriptionRepository.countAll();
+	}
+
 	async create(data: any) {
-		const { courseId, studentId } = data;
+		const { courseId, studentId, installments: installmentsArray } = data;
 		const course = await this.courseService.findOneById(courseId);
 		const student = await this.studentService.findOneById(studentId);
-		const installments = await this.installmentService.createMany(
-			course.installments,
-		);
-		const price = course.price;
+		let installments = [];
+		if (installmentsArray && installmentsArray.length > 0) {
+			installments = await this.installmentService.createMany(
+				installmentsArray,
+			);
+		}
 		const inscription = await super.create({
 			course,
 			student,
 			installments,
-			price,
 			state: Inscription.IN_PROGRESS_STATE,
 		});
 		return inscription;
 	}
 
-	// No permitir actualizar cuando ya se realizo un pago o se pago completamente.
 	async update(id: string, data: InscriptionUpdateInput) {
-		const { price, installments: installmentsArray } = data;
-		if (installmentsArray) {
-			//this.inscriptionRepository.removeInstallments(id);
-			const installments = this.installmentService.createMany(
+		let dataOpc = {};
+		const { courseId, studentId, installments: installmentsArray } = data;
+		if (courseId) {
+			const course = await this.courseService.findOneById(courseId);
+			dataOpc = { course };
+		}
+		if (studentId) {
+			const student = await this.studentService.findOneById(studentId);
+			dataOpc = { ...dataOpc, student };
+		}
+		if (installmentsArray && installmentsArray.length > 0) {
+			const inscription = await this.findOneById(id);
+			await this.inscriptionRepository.removeInstallments(id);
+			const installments = await this.installmentService.updateMany(
+				inscription,
 				installmentsArray,
 			);
-			console.log(installments);
+			dataOpc = { ...dataOpc, installments };
 		}
+		return super.update(id, { ...data, ...dataOpc });
 	}
 
 	delete(id: string): Promise<Inscription> {
