@@ -51,6 +51,10 @@ export class CourseService extends CrudOperations {
 		});
 	}
 
+	countAll(): Promise<Number> {
+		return this.courseRepository.countAll();
+	}
+
 	async create(data: CourseCreateDTO): Promise<Course> {
 		const { categoryId, installments: installmentsArray } = data;
 		let installments = [];
