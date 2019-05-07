@@ -17,6 +17,11 @@ export class CourseResolver {
 		return this.service.findOneById(id);
 	}
 
+	@Query()
+	countCourses() {
+		return this.service.countAll();
+	}
+
 	@Mutation()
 	createCourse(@Args('data') data: CourseCreateDTO) {
 		return this.service.create(data);
