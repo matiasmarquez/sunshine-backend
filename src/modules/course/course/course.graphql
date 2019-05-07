@@ -36,6 +36,7 @@ input CourseUpdateInput {
 type Query {
 	courses: [Course]!
 	course(id: ID!): Course!
+	countCourses: Int!
 }
 
 type Mutation {
