@@ -18,6 +18,11 @@ export class CourseRepository extends Repository<Course> {
 		return qb.where('course.id = :id', { id }).getOne();
 	}
 
+	public countAll() {
+		const qb = this.qb;
+		return qb.getCount();
+	}
+
 	private addJoins(qb: SelectQueryBuilder<Course>): SelectQueryBuilder<Course> {
 		qb.leftJoinAndSelect('course.installments', 'installments')
 			.leftJoinAndSelect('course.staff', 'staff')
