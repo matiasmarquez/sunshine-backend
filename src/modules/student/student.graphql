@@ -39,6 +39,7 @@ input StudentUpdateInput {
 type Query {
 	students: [Student!]
 	student(id: String!): Student
+	countStudents: Int!
 }
 
 type Mutation {

@@ -21,6 +21,11 @@ export class StudentResolver {
 		return this.service.findOneById(id);
 	}
 
+	@Query()
+	countStudents(): Promise<Number> {
+		return this.service.countAll();
+	}
+
 	@Mutation()
 	@UsePipes(new ValidationPipe())
 	createStudent(
