@@ -14,4 +14,9 @@ export class InscriptionInstallment extends InstallmentAbstract {
 		default: false,
 	})
 	paid: boolean;
+
+	@Column('text', {
+		nullable: true,
+	})
+	comment: string;
 }
