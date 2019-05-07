@@ -10,9 +10,13 @@ import { StaffPersonResolver } from './person/person.resolver';
 import { StaffCategory } from './category/category.entity';
 import { StaffCategoryService } from './category/category.service';
 import { StaffCategoryResolver } from './category/category.resolver';
+import { PersonRepository } from './person/person.repository';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Person, StaffCategory]), CourseModule],
+	imports: [
+		TypeOrmModule.forFeature([Person, PersonRepository, StaffCategory]),
+		CourseModule,
+	],
 	providers: [
 		StaffPersonService,
 		StaffPersonResolver,
