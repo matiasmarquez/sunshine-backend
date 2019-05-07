@@ -18,10 +18,7 @@ export class Course {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column({
-		type: 'varchar',
-		unique: true,
-	})
+	@Column({ type: 'varchar' })
 	name: string;
 
 	@ManyToOne(type => CourseCategory, category => category.courses, {
