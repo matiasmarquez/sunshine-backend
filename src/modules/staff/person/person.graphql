@@ -32,6 +32,7 @@ input StaffPersonUpdateInput {
 type Query {
 	staffPeople: [StaffPerson]!
 	staffPerson(id: ID!): StaffPerson!
+	countStaffPeople: Int!
 }
 
 type Mutation {

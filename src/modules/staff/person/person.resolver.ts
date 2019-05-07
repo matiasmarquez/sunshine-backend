@@ -21,6 +21,11 @@ export class StaffPersonResolver {
 		return this.service.findOneById(id);
 	}
 
+	@Query()
+	countStaffPeople() {
+		return this.service.countAll();
+	}
+
 	@Mutation()
 	createStaffPerson(@Args('data') data: StaffPersonCreateInput) {
 		return this.service.create(data);
