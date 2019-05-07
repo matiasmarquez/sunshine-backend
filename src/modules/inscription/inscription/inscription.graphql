@@ -5,26 +5,32 @@ type Inscription {
 	student: Student!
 	price: Float
 	state: String!
-	currentPayState: String!
+	hasInstallmentsNotPayed: Boolean
 }
 
 input InscriptionCreateInput {
-	courseId: String!
-	studentId: String!
+	courseId: ID!
+	studentId: ID!
+	installments: [InscriptionInstallmentCreateInput]
+	price: Float
 }
 
 input InscriptionUpdateInput {
-	price: Float
+	courseId: ID!
+	studentId: ID!
 	installments: [InscriptionInstallmentCreateInput]
+	price: Float
 }
 
 type Query {
 	inscriptions: [Inscription]!
-	inscription(id: String!): Inscription!
+	inscriptionsNotPayed: [Inscription]
+	inscription(id: ID!): Inscription!
+	countInscriptions: Int!
 }
 
 type Mutation {
 	createInscription(data: InscriptionCreateInput!): Inscription!
-	updateInscription(id: String!, data: InscriptionUpdateInput!): Inscription!
-	deleteInscription(id: String!): Inscription!
+	updateInscription(id: ID!, data: InscriptionUpdateInput!): Inscription!
+	deleteInscription(id: ID!): Inscription!
 }
