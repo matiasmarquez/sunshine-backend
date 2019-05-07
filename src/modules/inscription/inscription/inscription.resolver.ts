@@ -17,8 +17,18 @@ export class InscriptionResolver {
 	}
 
 	@Query()
+	inscriptionsNotPayed() {
+		return this.service.findNotPayed();
+	}
+
+	@Query()
 	inscription(@Args('id') id: string) {
 		return this.service.findOneById(id);
+	}
+
+	@Query()
+	countInscriptions() {
+		return this.service.countAll();
 	}
 
 	@Mutation()
