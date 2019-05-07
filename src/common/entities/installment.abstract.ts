@@ -5,7 +5,7 @@ export abstract class InstallmentAbstract {
 	id: string;
 
 	@Column('date')
-	date: Date;
+	date: any;
 
 	@Column({
 		type: 'float',
