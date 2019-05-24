@@ -126,6 +126,25 @@ export abstract class StudentUpdateInput {
     degree?: string;
 }
 
+export abstract class UserCreateInput {
+    name: string;
+    lastName: string;
+    username: string;
+    password: string;
+}
+
+export abstract class UserUpdateInput {
+    name?: string;
+    lastName?: string;
+    username?: string;
+    password?: string;
+}
+
+export abstract class Auth {
+    username: string;
+    token: string;
+}
+
 export abstract class Course {
     id: string;
     name: string;
@@ -163,6 +182,7 @@ export abstract class Inscription {
     price?: number;
     state: string;
     hasInstallmentsNotPayed?: boolean;
+    created?: Date;
 }
 
 export abstract class InscriptionInstallment {
@@ -175,11 +195,19 @@ export abstract class InscriptionInstallment {
 }
 
 export abstract class IMutation {
+    abstract login(username: string, password: string): Auth | Promise<Auth>;
+
     abstract createStudent(data: StudentCreateInput): Student | Promise<Student>;
 
     abstract updateStudent(id: string, data: StudentUpdateInput): Student | Promise<Student>;
 
     abstract deleteStudent(id: string): Student | Promise<Student>;
+
+    abstract createUser(data: UserCreateInput): User | Promise<User>;
+
+    abstract updateUser(id: string, data: UserUpdateInput): User | Promise<User>;
+
+    abstract deleteUser(id: string): User | Promise<User>;
 
     abstract createCourseCategory(data?: CourseCategoryCreateInput): CourseCategory | Promise<CourseCategory>;
 
@@ -228,11 +256,7 @@ export abstract class ParentType {
 }
 
 export abstract class IQuery {
-    abstract parents(): Parent[] | Promise<Parent[]>;
-
-    abstract parent(id: string): Parent | Promise<Parent>;
-
-    abstract parentTypes(): ParentType[] | Promise<ParentType[]>;
+    abstract me(): User | Promise<User>;
 
     abstract students(): Student[] | Promise<Student[]>;
 
@@ -240,7 +264,15 @@ export abstract class IQuery {
 
     abstract countStudents(): number | Promise<number>;
 
+    abstract parents(): Parent[] | Promise<Parent[]>;
+
+    abstract parent(id: string): Parent | Promise<Parent>;
+
+    abstract parentTypes(): ParentType[] | Promise<ParentType[]>;
+
     abstract users(): User[] | Promise<User[]>;
+
+    abstract user(id: string): User | Promise<User>;
 
     abstract courseCategories(): CourseCategory[] | Promise<CourseCategory[]>;
 
@@ -255,6 +287,8 @@ export abstract class IQuery {
     abstract inscriptions(): Inscription[] | Promise<Inscription[]>;
 
     abstract inscriptionsNotPayed(): Inscription[] | Promise<Inscription[]>;
+
+    abstract inscriptionsOfThisYear(): Inscription[] | Promise<Inscription[]>;
 
     abstract inscription(id: string): Inscription | Promise<Inscription>;
 
@@ -307,6 +341,8 @@ export abstract class Student {
 export abstract class User {
     id: string;
     username: string;
+    name: string;
+    lastName: string;
 }
 
 export type Date = any;
