@@ -39,6 +39,10 @@ export class InscriptionService extends CrudOperations {
 		return this.inscriptionRepository.findNotPayed();
 	}
 
+	findOfThisYear(): Promise<Inscription[]> {
+		return this.inscriptionRepository.findAllOfThisYear();
+	}
+
 	countAll(): Promise<Number> {
 		return this.inscriptionRepository.countAll();
 	}
