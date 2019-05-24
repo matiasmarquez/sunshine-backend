@@ -22,6 +22,11 @@ export class InscriptionResolver {
 	}
 
 	@Query()
+	inscriptionsOfThisYear() {
+		return this.service.findOfThisYear();
+	}
+
+	@Query()
 	inscription(@Args('id') id: string) {
 		return this.service.findOneById(id);
 	}
