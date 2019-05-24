@@ -38,7 +38,7 @@ input StudentUpdateInput {
 
 type Query {
 	students: [Student!]
-	student(id: String!): Student
+	student(id: ID!): Student
 	countStudents: Int!
 }
 
