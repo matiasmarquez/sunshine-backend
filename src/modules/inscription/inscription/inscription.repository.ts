@@ -17,6 +17,16 @@ export class InscriptionRepository extends Repository<Inscription> {
 		return qb.getMany();
 	}
 
+	public findAllOfThisYear(): Promise<Inscription[]> {
+		const qb = this.qb;
+		this.addJoins(qb);
+		this.addOrder(qb);
+		const date = new Date();
+		const year = date.getFullYear();
+		qb.andWhere('YEAR(inscription.created) = :year', { year });
+		return qb.getMany();
+	}
+
 	public findNotPayed(): Promise<Inscription[]> {
 		const qb = this.qb;
 		this.addJoins(qb);
@@ -55,6 +65,7 @@ export class InscriptionRepository extends Repository<Inscription> {
 		qb: SelectQueryBuilder<Inscription>,
 	): SelectQueryBuilder<Inscription> {
 		qb.orderBy({
+			'inscription.created': 'DESC',
 			'student.name': 'DESC',
 			'installments.date': 'ASC',
 		});
