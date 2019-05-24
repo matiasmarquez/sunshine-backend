@@ -4,6 +4,7 @@ import {
 	ManyToOne,
 	Column,
 	OneToMany,
+	CreateDateColumn,
 } from 'typeorm';
 
 import { Course } from 'modules/course/course/course.entity';
@@ -49,6 +50,9 @@ export class Inscription {
 		nullable: true,
 	})
 	price: number;
+
+	@CreateDateColumn({ type: 'datetime' })
+	created: Date;
 
 	public hasInstallmentsNotPayed(): boolean {
 		let has = false;
