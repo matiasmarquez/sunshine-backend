@@ -32,7 +32,7 @@ export class CourseRepository extends Repository<Course> {
 
 	private addOrder(qb: SelectQueryBuilder<Course>): SelectQueryBuilder<Course> {
 		qb.orderBy({
-			'course.name': 'DESC',
+			'course.name': 'ASC',
 			'installments.date': 'ASC',
 		});
 		return qb;
