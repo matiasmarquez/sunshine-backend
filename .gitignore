@@ -122,5 +122,6 @@ $RECYCLE.BIN/
 
 # Docker
 docker/
+fake-data/
 
 # End of https://www.gitignore.io/api/node,windows,visualstudiocode
