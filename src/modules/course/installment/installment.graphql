@@ -1,0 +1,12 @@
+type CourseInstallment {
+	id: ID!
+	date: Date!
+	price: Float!
+	course: Course!
+}
+
+input CourseInstallmentCreateInput {
+	id: ID
+	date: Date!
+	price: Float!
+}

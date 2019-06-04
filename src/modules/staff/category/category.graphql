@@ -1,0 +1,26 @@
+type StaffCategory {
+	id: ID!
+	name: String!
+	description: String
+}
+
+input StaffCategoryCreateInput {
+	name: String!
+	description: String
+}
+
+input StaffCategoryUpdateInput {
+	name: String
+	description: String
+}
+
+type Query {
+	staffCategories: [StaffCategory]!
+	staffCategory(id: ID!): StaffCategory!
+}
+
+type Mutation {
+	createStaffCategory(data: StaffCategoryCreateInput!): StaffCategory!
+	updateStaffCategory(id: ID!, data: StaffCategoryUpdateInput!): StaffCategory!
+	deleteStaffCategory(id: ID!): StaffCategory!
+}

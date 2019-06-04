@@ -1,0 +1,38 @@
+type Inscription {
+	id: ID!
+	course: Course!
+	installments: [InscriptionInstallment]
+	student: Student!
+	price: Float
+	state: String!
+	hasInstallmentsNotPayed: Boolean
+	created: Date
+}
+
+input InscriptionCreateInput {
+	courseId: ID!
+	studentId: ID!
+	installments: [InscriptionInstallmentCreateInput]
+	price: Float
+}
+
+input InscriptionUpdateInput {
+	courseId: ID!
+	studentId: ID!
+	installments: [InscriptionInstallmentCreateInput]
+	price: Float
+}
+
+type Query {
+	inscriptions: [Inscription]!
+	inscriptionsNotPayed: [Inscription]
+	inscriptionsOfThisYear: [Inscription]
+	inscription(id: ID!): Inscription!
+	countInscriptions: Int!
+}
+
+type Mutation {
+	createInscription(data: InscriptionCreateInput!): Inscription!
+	updateInscription(id: ID!, data: InscriptionUpdateInput!): Inscription!
+	deleteInscription(id: ID!): Inscription!
+}

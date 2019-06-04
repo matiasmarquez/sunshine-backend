@@ -1,0 +1,22 @@
+type InscriptionInstallment {
+	id: ID!
+	date: Date!
+	price: Float!
+	paid: Boolean
+	comment: String
+	inscription: Inscription!
+}
+
+input InscriptionInstallmentCreateInput {
+	date: Date!
+	price: Float!
+	paid: Boolean
+	comment: String
+}
+
+input InscriptionInstallmentUpdateInput {
+	date: Date!
+	price: Float!
+	paid: Boolean
+	comment: String
+}

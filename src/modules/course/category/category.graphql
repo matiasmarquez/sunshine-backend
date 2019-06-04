@@ -1,0 +1,36 @@
+scalar Date
+
+type CourseCategory {
+	id: ID!
+	courses: [Course]!
+	name: String!
+	description: String
+	color: String!
+	created: Date
+}
+
+input CourseCategoryCreateInput {
+	name: String!
+	description: String
+	color: String!
+}
+
+input CourseCategoryUpdateInput {
+	name: String
+	description: String
+	color: String
+}
+
+type Query {
+	courseCategories: [CourseCategory]!
+	courseCategory(id: ID!): CourseCategory!
+}
+
+type Mutation {
+	createCourseCategory(data: CourseCategoryCreateInput): CourseCategory!
+	updateCourseCategory(
+		id: ID!
+		data: CourseCategoryUpdateInput
+	): CourseCategory!
+	deleteCourseCategory(id: ID!): CourseCategory!
+}

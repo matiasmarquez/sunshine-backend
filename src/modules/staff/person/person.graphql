@@ -1,0 +1,42 @@
+type StaffPerson {
+	id: ID!
+	name: String!
+	lastName: String!
+	address: String
+	phone: String
+	email: String
+	category: StaffCategory!
+	courses: [Course]
+}
+
+input StaffPersonCreateInput {
+	name: String!
+	lastName: String!
+	address: String
+	phone: String
+	email: String
+	categoryId: String!
+	coursesIds: [String]
+}
+
+input StaffPersonUpdateInput {
+	name: String
+	lastName: String
+	address: String
+	phone: String
+	email: String
+	categoryId: String
+	coursesIds: [String]
+}
+
+type Query {
+	staffPeople: [StaffPerson]!
+	staffPerson(id: ID!): StaffPerson!
+	countStaffPeople: Int!
+}
+
+type Mutation {
+	createStaffPerson(data: StaffPersonCreateInput!): StaffPerson!
+	updateStaffPerson(id: ID!, data: StaffPersonUpdateInput!): StaffPerson!
+	deleteStaffPerson(id: ID!): StaffPerson!
+}
