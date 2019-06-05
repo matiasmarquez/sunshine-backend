@@ -5,7 +5,7 @@
 	"username": "root",
 	"password": "tAJRd21_Dx",
 	"database": "sunshine",
-	"entities": ["src/**/**.entity{.ts,.js}"],
+	"entities": ["dist/**/*.entity{.ts,.js}"],
 	"synchronize": true,
 	"logging": false
 }
