@@ -6,7 +6,7 @@ import {
 	OneToMany,
 } from 'typeorm';
 
-import { Course } from '../course/course.entity';
+import { Course } from 'modules/course/course/course.entity';
 
 @Entity('courses_categories')
 export class CourseCategory {

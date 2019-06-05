@@ -7,7 +7,7 @@ import {
 	OneToMany,
 } from 'typeorm';
 
-import { Parent } from 'modules/parent/parent.entity';
+import { Parent } from '../parent/parent.entity';
 
 @Entity('students')
 export class Student {
