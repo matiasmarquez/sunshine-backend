@@ -1,0 +1,9 @@
+{
+	"apps": [
+		{
+			"name": "server",
+			"script": "node",
+			"args": ["-r", "./tsconfig-paths-bootstrap.js", "dist/main.js"]
+		}
+	]
+}
